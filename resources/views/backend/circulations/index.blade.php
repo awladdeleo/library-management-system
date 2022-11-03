@@ -7,10 +7,6 @@
 
         <x-backend.partial.page-header>
             <li class="breadcrumb-item text-muted">
-                <a href="{{ route('users.index') }}" class="text-muted">{{ __('user.UserList') }}</a>
-            </li>
-
-            <li class="breadcrumb-item text-muted">
                 <a href="" class="active">{{ __('circulation.IssuedBookList') }}</a>
             </li>
         </x-backend.partial.page-header>
@@ -28,7 +24,7 @@
                             <span class="card-label font-weight-normal text-dark">{{ __('circulation.IssuedBookList') }}</span>
                         </h3>
 
-                        <x-backend.table.search :search="route('users.show',$user->id)"
+                        <x-backend.table.search :search="route('circulations.issue')"
                                                 :placeholder="__('book.TypeBookInformation')"
                                                 :buttonUrl="route('circulations.create.issue')"
                                                 :buttonText="__('circulation.IssueBook')"></x-backend.table.search>
@@ -44,9 +40,11 @@
                                 <tr class="text-left">
                                     <th>{{ __('book.Thumbnail') }}</th>
                                     <th>{{ __('book.BookTitle') }}</th>
+                                    <th>{{ __('circulation.UserName') }}</th>
                                     <th>{{ __('circulation.BookDetails') }}</th>
                                     <th>{{ __('circulation.Date') }}</th>
-                                    <th class="pr-0 text-right">{{ __('circulation.Status') }}</th>
+                                    <th class="pr-0">{{ __('circulation.Status') }}</th>
+                                    <th class="pr-0 text-right" style="min-width: 150px">{{ __('book.Action') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -70,6 +68,16 @@
                                         </td>
 
                                         <td>
+                                            <a href="{{route('users.edit',$issuebook->user->id)}}"
+                                               class="font-weight-normal text-info mb-1 font-size-lg">{{ __('user.Name') }}
+                                                : {{ $issuebook->user->name }}</a>
+                                            <p class="font-weight-normal text-dark font-size-sm mb-0">{{ __('user.Email') }}
+                                                : {{ $issuebook->user->email }}</p>
+                                            <p class="font-weight-normal text-dark font-size-sm  mb-0">{{ __('user.Phone') }}
+                                                : {{ $issuebook->user->phone }}</p>
+                                        </td>
+
+                                        <td>
                                             <p class="font-weight-normal text-dark font-size-md mb-1">{{ __('book.Author') }}
                                                 : {{ $issuebook->book->author }}</p>
                                             <p class="font-weight-normal text-dark font-size-md  mb-0">{{ __('book.Genre') }}
@@ -83,7 +91,7 @@
                                                 : {{ $issuebook->return_date->format('d F, Y') }}</p>
                                         </td>
 
-                                        <td class="text-right">
+                                        <td>
                                             @if($issuebook->status == \App\Models\BookCirculation::CIRCULATION_STATUS['Issued'])
                                                 <span class="label label-outline-success label-inline">{{ $issuebook->status }}</span>
                                             @else
@@ -91,6 +99,42 @@
                                             @endif
                                         </td>
 
+                                        <td class="pr-0 text-right">
+                                            <div class="card-toolbar">
+                                                <a href="#"
+                                                   class="btn btn-light-info btn-md py-2 font-weight-bolder dropdown-toggle"
+                                                   data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false">{{__('circulation.Action')}}</a>
+                                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                    <!--begin::Navigation-->
+                                                    <ul class="navi navi-hover">
+                                                        <li class="navi-item">
+                                                            <a href="{{ route('circulations.view',$issuebook->id) }}"
+                                                               class="navi-link">
+																	<span class="navi-icon">
+																		<i class="flaticon-edit-1"></i>
+																	</span>
+                                                                <span class="navi-text">{{__('circulation.View')}}</span>
+                                                            </a>
+                                                        </li>
+
+                                                        @if($issuebook->status == \App\Models\BookCirculation::CIRCULATION_STATUS['Issued'])
+                                                            <li class="navi-item">
+                                                                <a href="{{ route('circulations.return.book',$issuebook->user_id) }}"
+                                                                   class="navi-link">
+																	<span class="navi-icon">
+																		<i class="flaticon2-shopping-cart-1"></i>
+																	</span>
+                                                                    <span class="navi-text">{{__('circulation.ReturnBook')}}</span>
+                                                                </a>
+                                                            </li>
+                                                        @endif
+
+                                                    </ul>
+                                                    <!--end::Navigation-->
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

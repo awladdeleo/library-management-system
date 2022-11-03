@@ -8,20 +8,18 @@
                 errorPlacement: function (error, element) {
                     if (element.parent('.input-group').length ||
                         element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
-                        if(element.hasClass("role-radio")){
-                            error.insertAfter(element.parents('.radio-inline'));
-                        }
-                        else if(!element.hasClass("product_category"))
+                        if(!element.hasClass("product_category"))
                             error.insertAfter(element.parent());
                         // else just place the validation message immediately after the input
                     }
                     else if(element.hasClass("select2-hidden-accessible")) {
-                        if(element.hasClass("kt_select2_3")){
-                            let emnt = element.siblings('.select2-container--default').find('.select2-selection--multiple');
+                        if(element.attr("id") === 'kt_select2_3'){
+                            var emnt = element.siblings('.select2-container--default').find('.select2-selection--multiple');
                             error.insertAfter(emnt);
                         }else{
-                            let emnt = $("#select2-" + element.attr("id") + "-container").parent();
+                            var emnt = $("#select2-" + element.attr("id") + "-container").parent();
                             error.insertAfter(emnt);
+                            // element.siblings('.text-muted').addClass('mt-6');
                         }
                     }
                     else {
@@ -30,10 +28,12 @@
                 },
                 highlight: function (element) {
                     if ($(element).hasClass("select2-hidden-accessible")) {
-                        if($(element).hasClass("kt_select2_3")){
+                        if($(element).attr("id") === 'kt_select2_3'){
                             $(element).siblings('.select2-container--default').find('.select2-selection--multiple').addClass('is-invalid');
                         }else
+                        {
                             $("#select2-" + $(element).attr("id") + "-container").parent().addClass('is-invalid');
+                        }
                     }
                     else{
                         if($(element).hasClass("product_category"))
@@ -51,10 +51,12 @@
 
                 unhighlight: function(element) {
                     if ($(element).hasClass("select2-hidden-accessible")) {
-                        if($(element).hasClass("kt_select2_3")){
+                        if($(element).attr("id") === 'kt_select2_3'){
                             $(element).siblings('.select2-container--default').find('.select2-selection--multiple').removeClass('is-invalid').addClass('is-valid');
-                        }else
+                        }else{
                             $("#select2-" + $(element).attr("id") + "-container").parent().removeClass('is-invalid').addClass('is-valid');
+                            // $(element).siblings('.text-muted').removeClass('mt-6');
+                        }
                     }else
                     {
                         if($(element).hasClass("product_category"))
@@ -66,7 +68,7 @@
 
                 success: function (element) {
                     if ($(element).hasClass("select2-hidden-accessible")) {
-                        if($(element).hasClass("kt_select2_3")){
+                        if($(element).attr("id") === 'kt_select2_3'){
                             $(element).siblings('.select2-container--default').find('.select2-selection--multiple').removeClass('is-invalid').addClass('is-valid');
                         }else
                             $("#select2-" + $(element).attr("id") + "-container").parent().addClass('is-valid');

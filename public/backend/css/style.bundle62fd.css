@@ -64879,8 +64879,8 @@ code {
 }
 
 .form-control.form-control-solid {
-    background-color: #f3f6f9;
-    border-color: #f3f6f9;
+    background-color: #fff;
+    border-color: #e4e6ef;
     color: #3f4254;
     -webkit-transition: color .15s ease, background-color .15s ease, border-color .15s ease, -webkit-box-shadow .15s ease;
     transition: color .15s ease, background-color .15s ease, border-color .15s ease, -webkit-box-shadow .15s ease;
@@ -64902,7 +64902,7 @@ code {
 }
 
 .form-control.form-control-solid.active, .form-control.form-control-solid.focus, .form-control.form-control-solid:active, .form-control.form-control-solid:focus {
-    background-color: #ebedf3;
+    background-color: #fff;
     border-color: #ebedf3;
     color: #3f4254;
     -webkit-transition: color .15s ease, background-color .15s ease, border-color .15s ease, -webkit-box-shadow .15s ease;

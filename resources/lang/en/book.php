@@ -8,6 +8,7 @@
 
 return [
     'Books' => 'Books',
+    'Book' => 'Book',
     'ISBNNumber' => 'ISBN Number',
     'EnterISBNNumber' => 'Enter isbn number',
     'Author' => 'Author',
@@ -33,4 +34,6 @@ return [
     'TypeBookInformation' => 'Type book information',
     'Action' => 'Action',
     'BookDeleted' => 'Book has been deleted successfully',
+    'BookTitle' => 'Book Title',
+    'BookDetails' => 'Book Details',
 ];

@@ -24,9 +24,13 @@ Route::group(['middleware' => ['auth', 'web']], function () {
         'books' => BookController::class,
     ]);
 
-    Route::group(['prefix' => 'book-circulation','as'=>'circulation.'], function () {
-        Route::get('issue',[BookCirculationController::class,'issueBook'])->name('issue.book');
-        Route::get('return',[BookCirculationController::class,'returnBook'])->name('return.book');
+    Route::group(['prefix' => 'book-circulations','as'=>'circulations.'], function () {
+        Route::get('/',[BookCirculationController::class,'issueBook'])->name('issue');
+        Route::get('issue-book',[BookCirculationController::class,'createIssueBook'])->name('create.issue');
+        Route::post('issue-book',[BookCirculationController::class,'submitIssueBook'])->name('submit.issue');
+        Route::get('return-book/{user}',[BookCirculationController::class,'returnBook'])->name('return.book');
+        Route::patch('return-book/{user}/submit',[BookCirculationController::class,'submitReturnBook'])->name('submit.return.book');
+        Route::get('book-details/{bookCirculation}',[BookCirculationController::class,'view'])->name('view');
     });
 
     Route::get('lang/change/{lang}', [LangController::class, 'lang_change'])->name('lang.change');

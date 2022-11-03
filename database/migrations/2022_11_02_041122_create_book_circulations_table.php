@@ -18,9 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('book_id')->constrained();
             $table->string('status');
-            $table->timestamp('issue_date')->nullable();
-            $table->timestamp('return_date')->nullable();
-            $table->text('note')->nullable();
+            $table->date('issue_date')->nullable();
+            $table->date('return_date')->nullable();
+            $table->text('issue_note')->nullable();
+            $table->text('return_note')->nullable();
             $table->timestamps();
         });
     }

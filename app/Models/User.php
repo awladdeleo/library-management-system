@@ -56,6 +56,27 @@ class User extends Authenticatable implements TranslatableContract
         return $builder->where('status', true);
     }
 
+    /**
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeOnlyUser(Builder $builder): Builder
+    {
+        return $builder->where('role', null);
+    }
+
+
+    /**
+     * @param Builder $builder
+     * @param null $searchItem
+     * @return Builder
+     */
+    public function scopeSearch(Builder $builder, $searchItem = null): Builder
+    {
+        return $builder->whereTranslationLike('name', '%'.$searchItem.'%')
+            ->orWhereTranslationLike('phone',  '%'.$searchItem.'%');
+    }
+
 
     public function getImageAttribute(): string
     {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
@@ -32,6 +33,18 @@ class Book extends Model implements TranslatableContract
         }else{
             return false;
         }
+    }
+
+    /**
+     * @param Builder $builder
+     * @param null $searchItem
+     * @return Builder
+     */
+    public function scopeSearch(Builder $builder, $searchItem = null): Builder
+    {
+        return $builder->whereTranslationLike('title', '%'.$searchItem.'%')
+            ->orWhereTranslationLike('author',  '%'.$searchItem.'%')
+            ->orWhereTranslationLike('genre',  '%'.$searchItem.'%');
     }
 
 }

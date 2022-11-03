@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\User\UserStoreRequest;
 use App\Http\Requests\Backend\User\UserUpdateRequest;
+use App\Models\BookCirculation;
 use App\Models\User;
 use App\Services\User\UserService;
 use Brian2694\Toastr\Facades\Toastr;
@@ -22,6 +23,7 @@ class UserController extends Controller
     {
         $data['users'] = User::withTranslation()
             ->translatedIn(app()->getLocale())
+            ->search(request()->input('query'))
             ->get();
 
         return view('backend.users.index',$data);
@@ -54,12 +56,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        $data['issuebooks'] = BookCirculation::with('book')
+            ->where('user_id',$user->id)
+            ->orderBy('id','desc')
+            ->whereHas('book',function ($query){
+                $query->search(request()->input('query'));
+            })
+            ->get();
+
+        $data['user'] = $user;
+
+        return view('backend.users.show',$data);
     }
 
     /**

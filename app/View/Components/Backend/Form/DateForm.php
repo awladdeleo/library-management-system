@@ -8,6 +8,7 @@ class DateForm extends Component
 {
     public $name;
     public $title;
+    public $placeholder;
     public $inputClass;
     public $labelClass;
     public $required;
@@ -21,10 +22,11 @@ class DateForm extends Component
      * @param null $inputClass
      * @param null $labelClass
      */
-    public function __construct($name = null, $title = null, $inputClass = null, $labelClass = null, $required=null,$value=null)
+    public function __construct($name = null, $title = null, $placeholder = null, $inputClass = null, $labelClass = null, $required=null,$value=null)
     {
         $this->name = $name;
         $this->title = $title;
+        $this->placeholder = $placeholder;
         $this->inputClass = $inputClass;
         $this->labelClass = $labelClass;
         $this->required = $required;

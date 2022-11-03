@@ -1348,6 +1348,9 @@ body.dragging, body.dragging * {
     height: 40px !important;
 }
 
+textarea.form-control{
+    height: 100px !important;
+}
 #product-banner-form .image-input-empty {
     width: 295px !important;
     height: 672px !important;

@@ -1,22 +1,17 @@
-<div class="form-group">
+<div class="form-group row">
     @if($title) <label for="{{$name}}"
-                       class="col-form-label font-weight-bold {{$labelClass}}">{{ $title }}</label> @endif
-    <div class="{{$inputClass}}" id="{{$name}}" data-target-input="nearest">
+                       class="col-form-label font-weight-bold {{$labelClass}}">{{ $title }} <span class="text-danger">{{$required ? '*' : ''}}</span></label> @endif
+    <div class="{{$inputClass}}" id="{{$name}}" >
 
-        <div class="input-group date ">
-            <input type="text" name="{{$name}}" class="form-control datetimepicker-input {{$errors->has($name) ? 'is-invalid' :'' }}" placeholder="yyyy-mm-dd"
-                   data-target="#{{$name}}" value="{{ $value }}"/>
-            <div class="input-group-append" data-target="#{{$name}}" data-toggle="datetimepicker">
-                <span class="input-group-text"><i class="ki ki-calendar"></i></span>
-            </div>
+        <input type="text" readonly="readonly" class="form-control form-control-solid datetimepicker-input {{$errors->has($name) ? 'is-invalid' :'' }}"
+               id="kt_datetimepicker_5" name="{{ $name }}" data-toggle="datetimepicker"
+               data-target="#kt_datetimepicker_5" />
 
-            @if($errors->has($name))
-                <div class="invalid-feedback">{{$errors->first($name)}}</div>
-            @endif
+        @if($errors->has($name))
+            <div class="invalid-feedback">{{$errors->first($name)}}</div>
+        @endif
 
-        </div>
-
-        <span class="form-text text-muted ">{{ __('common.SelectDate') }}</span>
+        <span class="form-text text-muted ">{{ $placeholder }}</span>
     </div>
 </div>
 

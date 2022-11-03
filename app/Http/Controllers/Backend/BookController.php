@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Book\BookStoreRequest;
 use App\Models\Book;
+use App\Models\BookCirculation;
 use App\Services\Book\BookService;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class BookController extends Controller
 
         $data['books'] = Book::withTranslation()
             ->translatedIn(app()->getLocale())
+            ->search(request()->input('query'))
             ->get();
 
         return view('backend.books.index', $data);
@@ -49,15 +51,24 @@ class BookController extends Controller
         return back();
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Book $book
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        $data['issuebooks'] = BookCirculation::with('user','book')
+            ->where('book_id',$book->id)
+            ->orderBy('id','desc')
+            ->whereHas('user',function ($query){
+                $query->search(request()->input('query'));
+            })
+            ->get();
+
+        $data['book'] = $book;
+
+        return view('backend.books.show',$data);
     }
 
     /**
