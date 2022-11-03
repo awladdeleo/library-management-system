@@ -9,6 +9,9 @@
 namespace App\Services\Book;
 
 
+use App\Models\BookCirculation;
+use Brian2694\Toastr\Facades\Toastr;
+
 class BookService
 {
     public static function serializeData($request){
@@ -45,5 +48,18 @@ class BookService
         ];
 
         return $data;
+    }
+
+    public static function quantityCheck($user_id=null,$books=[]){
+        $book = BookCirculation::where('user_id',$user_id)
+            ->where('status',BookCirculation::CIRCULATION_STATUS['Issued'])
+            ->count();
+
+        if($book > 4 || ($book+count($books)) > 5){
+            Toastr::error(__('circulation.QuantityGreaterThanFive'), __('circulation.BookCirculation'));
+            return true;
+        }else{
+            return false;
+        }
     }
 }

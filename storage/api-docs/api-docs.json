@@ -1,0 +1,1353 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Library Management API - Use Our API To Have Custom Workflows And Integration!",
+        "description": "Library Management API",
+        "contact": {
+            "email": "admin@mail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://library.test/api",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/books": {
+            "get": {
+                "tags": [
+                    "Books List"
+                ],
+                "summary": "List of books ",
+                "operationId": "getAllBookList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search for book related info e.g = title,author,genre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "awlad"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Book Store"
+                ],
+                "summary": "Create a book",
+                "description": "Create a book",
+                "operationId": "createBook",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "book title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Physics"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "author name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Awlad hossain"
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "book genre",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Tech"
+                    },
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "description": "isbn number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "12345"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "description"
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "book quantity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "12"
+                    },
+                    {
+                        "name": "thumbnail",
+                        "in": "query",
+                        "description": "book image",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/books/{book_id}": {
+            "get": {
+                "tags": [
+                    "Book user list"
+                ],
+                "summary": "List of users that book has ",
+                "operationId": "getBookUserList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search for user related info e.g = name,phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "book 1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Book Delete"
+                ],
+                "summary": "Delete a book",
+                "description": "Delete a book",
+                "operationId": "deleteBook",
+                "parameters": [
+                    {
+                        "name": "book_id",
+                        "in": "path",
+                        "description": "Book id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Error: Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Book Update"
+                ],
+                "summary": "Update a book",
+                "description": "Update a book",
+                "operationId": "updateBook",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "book title",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Physics"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "author name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Awlad hossain"
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "book genre",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Tech"
+                    },
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "description": "isbn number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "12345"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "description"
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "book quantity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "12"
+                    },
+                    {
+                        "name": "thumbnail",
+                        "in": "query",
+                        "description": "book image",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/book-circulations": {
+            "get": {
+                "tags": [
+                    "Circulated Books List"
+                ],
+                "summary": "List of books ",
+                "operationId": "getAllIssuedBookList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search for book related info e.g = title,author,genre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "book name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Book Issue"
+                ],
+                "summary": "Create Issue book",
+                "description": "Issue or Return book",
+                "operationId": "createIssueBook",
+                "parameters": [
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "book_name",
+                        "in": "query",
+                        "description": "list of book id",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": "[1,2,3]"
+                    },
+                    {
+                        "name": "return_date",
+                        "in": "query",
+                        "description": "book return date",
+                        "required": true,
+                        "schema": {
+                            "type": "date"
+                        },
+                        "example": "05-11-2022"
+                    },
+                    {
+                        "name": "note",
+                        "in": "query",
+                        "description": "issue note",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "text note"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/book-circulations/return-book/{user_id}/submit": {
+            "patch": {
+                "tags": [
+                    "Return Book"
+                ],
+                "summary": "return an issue book",
+                "description": "return issue book",
+                "operationId": "returnBook",
+                "parameters": [
+                    {
+                        "name": "book_name",
+                        "in": "query",
+                        "description": "list of book id",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        },
+                        "example": "[1,2,3]"
+                    },
+                    {
+                        "name": "note",
+                        "in": "query",
+                        "description": "return note",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "text note"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login",
+                "description": "Login by email and password",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Give User Credentials - (Email, Password)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Your credentials are incorrect. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users List"
+                ],
+                "summary": "List of users ",
+                "operationId": "getUserList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search for users related info e.g = name,phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "awlad"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users Store"
+                ],
+                "summary": "Create a user",
+                "description": "Create a user",
+                "operationId": "createUser",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "user name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Awlad de leo"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "user phone number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "01856214523"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "abc@mail.com"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "user image",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "User book list"
+                ],
+                "summary": "List of books that user has ",
+                "operationId": "getBookList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search for book related info e.g = title,author,genre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "book 1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "200"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "User Delete"
+                ],
+                "summary": "Delete a user",
+                "description": "Delete a user",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Error: Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Users Update"
+                ],
+                "summary": "update a user",
+                "description": "Update a user",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "user name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Awlad de leo"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "user phone number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "01856214523"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "abc@mail.com"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "user image",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        },
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": "201"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "passport": []
+        }
+    ]
+}

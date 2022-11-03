@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Sanctum\HasApiTokens;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use Laravel\Passport\HasApiTokens;
 
 
 class User extends Authenticatable implements TranslatableContract
@@ -73,8 +73,8 @@ class User extends Authenticatable implements TranslatableContract
      */
     public function scopeSearch(Builder $builder, $searchItem = null): Builder
     {
-        return $builder->whereTranslationLike('name', '%'.$searchItem.'%')
-            ->orWhereTranslationLike('phone',  '%'.$searchItem.'%');
+        return $builder->whereTranslationLike('name', '%'.$searchItem.'%',app()->getLocale())
+            ->orWhereTranslationLike('phone',  '%'.$searchItem.'%',app()->getLocale());
     }
 
 

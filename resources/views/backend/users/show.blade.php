@@ -93,14 +93,12 @@
 
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="5">{{ __('vendors.NoRecordFound') }}</td>
-                                    </tr>
+
                                 @endforelse
                                 </tbody>
                             </table>
 
-                            {{--{{$users->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}--}}
+                            {{$issuebooks->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}
 
                         </div>
                         <!--end::Table-->

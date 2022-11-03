@@ -17,13 +17,22 @@ class LangMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('lang_code')){
-            App::setLocale(session()->get('lang_code'));
-        }else{
-            session()->put('lang_code','en');
-            App::setLocale(session()->get('lang_code'));
+        if( Request::capture()->expectsJson()){
+            // Check header request and determine localizaton
+            $local = ($request->hasHeader('x-lang')) ? $request->header('x-lang') : 'en';
+            // set laravel localization
+            app()->setLocale($local);
 
+        }else{
+            if(session()->has('lang_code')){
+                App::setLocale(session()->get('lang_code'));
+            }else{
+                session()->put('lang_code','en');
+                App::setLocale(session()->get('lang_code'));
+
+            }
         }
+
         return $next($request);
     }
 }

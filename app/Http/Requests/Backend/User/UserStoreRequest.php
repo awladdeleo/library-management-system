@@ -29,4 +29,18 @@ class UserStoreRequest extends FormRequest
             'email' => ['required','email', 'unique:users,email']
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => __('user.Name'),
+            'phone' => __('user.Phone'),
+            'email' => __('user.Email'),
+        ];
+    }
 }

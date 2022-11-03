@@ -24,7 +24,8 @@ class UserController extends Controller
         $data['users'] = User::withTranslation()
             ->translatedIn(app()->getLocale())
             ->search(request()->input('query'))
-            ->get();
+            ->onlyUser()
+            ->paginate(10);
 
         return view('backend.users.index',$data);
     }
@@ -67,7 +68,7 @@ class UserController extends Controller
             ->whereHas('book',function ($query){
                 $query->search(request()->input('query'));
             })
-            ->get();
+            ->paginate(10);
 
         $data['user'] = $user;
 

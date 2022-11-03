@@ -111,9 +111,6 @@
                                                         <li class="navi-item">
                                                             <a href="{{ route('circulations.view',$issuebook->id) }}"
                                                                class="navi-link">
-																	<span class="navi-icon">
-																		<i class="flaticon-edit-1"></i>
-																	</span>
                                                                 <span class="navi-text">{{__('circulation.View')}}</span>
                                                             </a>
                                                         </li>
@@ -122,9 +119,6 @@
                                                             <li class="navi-item">
                                                                 <a href="{{ route('circulations.return.book',$issuebook->user_id) }}"
                                                                    class="navi-link">
-																	<span class="navi-icon">
-																		<i class="flaticon2-shopping-cart-1"></i>
-																	</span>
                                                                     <span class="navi-text">{{__('circulation.ReturnBook')}}</span>
                                                                 </a>
                                                             </li>
@@ -137,14 +131,12 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="5">{{ __('vendors.NoRecordFound') }}</td>
-                                    </tr>
+
                                 @endforelse
                                 </tbody>
                             </table>
 
-                            {{--{{$users->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}--}}
+                            {{$issuebooks->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}
 
                         </div>
                         <!--end::Table-->

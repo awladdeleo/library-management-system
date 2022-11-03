@@ -23,7 +23,7 @@ class BookController extends Controller
         $data['books'] = Book::withTranslation()
             ->translatedIn(app()->getLocale())
             ->search(request()->input('query'))
-            ->get();
+            ->paginate(10);
 
         return view('backend.books.index', $data);
     }
@@ -64,7 +64,7 @@ class BookController extends Controller
             ->whereHas('user',function ($query){
                 $query->search(request()->input('query'));
             })
-            ->get();
+            ->paginate(10);
 
         $data['book'] = $book;
 

@@ -31,4 +31,19 @@ class BookStoreRequest extends FormRequest
             'quantity' => ['required','numeric']
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'title' => __('book.Title'),
+            'author' => __('book.Author'),
+            'genre' => __('book.Genre'),
+            'quantity' => __('book.Quantity'),
+        ];
+    }
 }

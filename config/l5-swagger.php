@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Library Management System',
             ],
 
             'routes' => [
@@ -209,9 +209,10 @@ return [
                         'read',
                         'write'
                     ],
+                    */
 
                     'passport' => []
-                    */
+
                 ],
             ],
         ],

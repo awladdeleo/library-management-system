@@ -2,8 +2,8 @@
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand" kt-hidden-height="65" style="">
         <!--begin::Logo-->
-        <a href="../../../index.html" class="brand-logo">
-            <img alt="Logo" src="{{ asset('backend/media/logos/logo-light.png') }}">
+        <a href="{{ url('/') }}" class="brand-logo">
+            <h2>E-Library</h2>
         </a>
         <!--end::Logo-->
         <!--begin::Toggle-->
@@ -35,8 +35,8 @@
              data-menu-dropdown-timeout="500">
             <!--begin::Menu Nav-->
             <ul class="menu-nav">
-                <li class="menu-item menu-item-active" aria-haspopup="true">
-                    <a href="" class="menu-link">
+                <li class="menu-item {{ Request::is('/') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                    <a href="{{ route('home') }}" class="menu-link">
 										<span class="svg-icon menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg"
                                                  xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"

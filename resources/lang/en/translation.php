@@ -6,6 +6,8 @@ return [
     'Show' => 'Show',
     'Edit' => 'Edit',
     'Delete' => 'Delete',
-
+    'Back' => 'Back',
+    'DeleteText' => 'Are you sure want to delete ?',
+    'Close' => 'Close',
 ];
 

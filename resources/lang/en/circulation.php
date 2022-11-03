@@ -22,6 +22,7 @@ return [
     'EnterNote' => 'Enter additional note',
     'EnterReturnDate' => 'Enter book return date',
     'BookIssuedAdded' => 'Book issued successfully',
+    'BookReturned' => 'Book returned successfully',
     'Status' => 'Status',
     'BookDetails' => 'Book Details',
     'Date' => 'Date',
@@ -29,5 +30,6 @@ return [
     'View' => 'View',
     'IssuedBookDetails' => 'Issued Book Details',
     'IssuedBookList' => 'Issued Book List',
-    'BookBelongsToUser' => 'Books belongs to this user'
+    'BookBelongsToUser' => 'Books belongs to this user',
+    'QuantityGreaterThanFive' => 'Maximum book limit is 5',
 ];

@@ -8,6 +8,8 @@ use App\Http\Requests\Backend\Circulation\ReturnBookRequest;
 use App\Models\Book;
 use App\Models\BookCirculation;
 use App\Models\User;
+use App\Services\Book\BookService;
+use App\Services\MailService;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class BookCirculationController extends Controller
     public function issueBook(){
         $data['issuebooks'] = BookCirculation::with('book','user')
             ->orderBy('id','desc')
-            ->get();
+            ->paginate(10);
         return view('backend.circulations.index',$data);
     }
 
@@ -49,6 +51,11 @@ class BookCirculationController extends Controller
         $books = $request->input('book_name');
         $validateData = [];
 
+        // if true , user already have 5 books.
+        if(BookService::quantityCheck($request->input('user_name') ,$books)){
+            return back();
+        }
+
         foreach ($books as $book){
             array_push($validateData,[
                 'user_id' => $request->input('user_name'),
@@ -61,6 +68,10 @@ class BookCirculationController extends Controller
         }
 
         BookCirculation::insert($validateData);
+
+        try{
+            MailService::sendNotification($request->input('user_name'));
+        }catch (\Exception $exception){}
 
         Toastr::success(__('circulation.BookIssuedAdded'), __('circulation.BookCirculation'));
 
@@ -102,7 +113,7 @@ class BookCirculationController extends Controller
                'return_date' => now()
             ]);
 
-        Toastr::success(__('circulation.BookIssuedAdded'), __('circulation.BookCirculation'));
+        Toastr::success(__('circulation.BookReturned'), __('circulation.BookCirculation'));
 
         return redirect()->route('circulations.return.book',$user->id);
     }

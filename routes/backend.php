@@ -14,7 +14,9 @@ use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['middleware' => ['auth', 'web']], function () {
+Route::group(['middleware' => ['auth', 'web','lang']], function () {
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::post('users/active/{user}',[UserController::class,'activeUser'])->name('users.active');
     Route::post('books/active/{book}',[BookController::class,'activeBook'])->name('books.active');

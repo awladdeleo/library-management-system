@@ -30,4 +30,18 @@ class UserUpdateRequest extends FormRequest
             'email' => 'required','email', Rule::unique('users','email')->ignore($this->id)
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => __('user.Name'),
+            'phone' => __('user.Phone'),
+            'email' => __('user.Email'),
+        ];
+    }
 }

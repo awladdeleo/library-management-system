@@ -42,9 +42,9 @@ class Book extends Model implements TranslatableContract
      */
     public function scopeSearch(Builder $builder, $searchItem = null): Builder
     {
-        return $builder->whereTranslationLike('title', '%'.$searchItem.'%')
-            ->orWhereTranslationLike('author',  '%'.$searchItem.'%')
-            ->orWhereTranslationLike('genre',  '%'.$searchItem.'%');
+        return $builder->whereTranslationLike('title', '%'.$searchItem.'%',app()->getLocale())
+            ->orWhereTranslationLike('author',  '%'.$searchItem.'%',app()->getLocale())
+            ->orWhereTranslationLike('genre',  '%'.$searchItem.'%',app()->getLocale());
     }
 
 }

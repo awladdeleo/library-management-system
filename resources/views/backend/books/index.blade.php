@@ -107,21 +107,19 @@
 
                                         <td class="pr-0 text-right">
 
-                                            <x-backend.table.button.show :link="route('books.show',$book->id)" :title="__('book.Show')" class="btn-hover-info" ></x-backend.table.button.show>
-                                            <x-backend.table.button.edit :link="route('books.edit',$book->id)" :title="__('book.Edit')" class="btn-hover-primary"></x-backend.table.button.edit>
-                                            <x-backend.table.button.delete :title="__('common.Delete')" class="btn-hover-danger" :id="$book->id" name="books" :message="__('vendors.DeleteVendorText')"></x-backend.table.button.delete>
+                                            <x-backend.table.button.show :link="route('books.show',$book->id)" :title="__('translation.Show')" class="btn-hover-info" ></x-backend.table.button.show>
+                                            <x-backend.table.button.edit :link="route('books.edit',$book->id)" :title="__('translation.Edit')" class="btn-hover-primary"></x-backend.table.button.edit>
+                                            <x-backend.table.button.delete :title="__('translation.Delete')" class="btn-hover-danger" :id="$book->id" name="books" :message="__('translation.Delete')"></x-backend.table.button.delete>
 
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="5">{{ __('vendors.NoRecordFound') }}</td>
-                                    </tr>
+
                                 @endforelse
                                 </tbody>
                             </table>
 
-                            {{--{{$users->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}--}}
+                            {{$books->appends(['query' => request()->input('query')])->links('vendor.pagination.custom')}}
 
                         </div>
                         <!--end::Table-->
@@ -138,5 +136,5 @@
     <!--end::Content-->
 
     <!-- Modal -->
-    <x-backend.modal.delete ><p>{{ __('vendors.DeleteVendorText') }}</p></x-backend.modal.delete>
+    <x-backend.modal.delete ><p>{{ __('translation.DeleteText') }}</p></x-backend.modal.delete>
 @stop
